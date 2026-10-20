@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>{{ title or 'SuperQuest' }} · SuperQuest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  <script defer src="{{ url_for('static', filename='js/game.js') }}"></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="{{ url_for('main.index') }}"><span class="brand-mark">S</span><span>SUPER<span class="brand-accent">QUEST</span></span></a>
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <nav class="nav-links">
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('main.dashboard') }}">Command center</a><a href="{{ url_for('main.missions') }}">Missions</a><a href="{{ url_for('main.powers') }}">Powers</a><a href="{{ url_for('main.leaderboard') }}">Leaderboard</a><a href="{{ url_for('main.profile') }}">Profile</a>
+          {% if current_user.role == 'admin' %}<a href="{{ url_for('admin.dashboard') }}">Operations</a>{% endif %}
+          <form method="post" action="{{ url_for('auth.logout') }}" class="inline-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="nav-logout">Log out</button></form>
+        {% else %}<a href="{{ url_for('main.leaderboard') }}">Leaderboard</a><a href="{{ url_for('auth.login') }}">Log in</a><a class="nav-cta" href="{{ url_for('auth.register') }}">Join the team <span>↗</span></a>{% endif %}
+      </nav>
+    </header>
+    {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack" role="status">{% for category, message in messages %}<div class="flash flash-{{ category }}">{{ message }}<button aria-label="Dismiss message">×</button></div>{% endfor %}</div>{% endif %}{% endwith %}
+    <main>{% block content %}{% endblock %}</main>
+    <footer class="footer"><a class="brand footer-brand" href="{{ url_for('main.index') }}"><span class="brand-mark">S</span><span>SUPER<span class="brand-accent">QUEST</span></span></a><span>Original heroes. Real impact.</span><span>© SuperQuest</span></footer>
+  </div>
+</body>
+</html>
