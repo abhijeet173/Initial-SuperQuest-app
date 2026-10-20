@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SuperQuest
 
 SuperQuest is an original superhero mission game built with Flask. Choose a power, solve timed field challenges, earn score and experience, unlock achievements, and climb a database-backed leaderboard. The app uses original names and CSS-built artwork; it does not depend on external game images or paid services.
@@ -114,3 +115,6 @@ Do not reuse the development secret or commit `.env`. Set secure cookies when HT
 - If PostgreSQL cannot connect, verify the full `DATABASE_URL`, network access, and installed driver.
 - For local database resets during development only, stop the app and remove `instance/superquest.db`; this deletes local player data.
 - For an expired form message, reload the page to obtain a fresh CSRF token.
+=======
+# Initial-SuperQuest-app
+>>>>>>> f05ab7cdfc7b782a4c7c4b1d53909ea1494b8f04
